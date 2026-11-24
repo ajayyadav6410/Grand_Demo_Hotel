@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+
+{% block title %}Guest Dashboard | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-welcome fade-in">
+    <div>
+        <p class="gold-text">WELCOME TO GRAND DEMO HOTEL</p>
+        <h1>Welcome, {{ session.get('user_name', 'Guest') }}!</h1>
+        <p>Your comfort and memorable experience are our priority.</p>
+    </div>
+    <div class="dashboard-crown">♛</div>
+</section>
+
+<section class="dashboard-summary">
+    <div class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">♛</span>
+        <div>
+            <p>Total Room Bookings</p>
+            <h2>{{ bookings_count }}</h2>
+        </div>
+    </div>
+
+    <div class="dashboard-stat-card">
+        <span class="dashboard-stat-icon">✦</span>
+        <div>
+            <p>Total Food Orders</p>
+            <h2>{{ food_orders_count }}</h2>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard-section">
+    <div class="section-title">
+        <p class="gold-text">YOUR HOTEL EXPERIENCE</p>
+        <h2>Explore Your Dashboard</h2>
+        <p>Manage your stay and discover hotel services.</p>
+    </div>
+
+    <div class="card-grid">
+
+        <article class="card dashboard-action-card">
+            <div class="card-body">
+                <div class="feature-icon">♛</div>
+                <h3>Explore Rooms</h3>
+                <p>Discover our Single, Double and Deluxe rooms.</p>
+                <a href="{{ url_for('booking.rooms') }}" class="btn btn-primary">
+                    View Rooms
+                </a>
+            </div>
+        </article>
+
+        <article class="card dashboard-action-card">
+            <div class="card-body">
+                <div class="feature-icon">◇</div>
+                <h3>Hotel Facilities</h3>
+                <p>Explore the facilities available for our guests.</p>
+                <a href="{{ url_for('customer.facilities') }}" class="btn btn-primary">
+                    View Facilities
+                </a>
+            </div>
+        </article>
+
+        <article class="card dashboard-action-card">
+            <div class="card-body">
+                <div class="feature-icon">♨</div>
+                <h3>Restaurant</h3>
+                <p>Choose your favorite food and place an order.</p>
+                <a href="{{ url_for('restaurant.menu') }}" class="btn btn-primary">
+                    View Menu
+                </a>
+            </div>
+        </article>
+
+        <article class="card dashboard-action-card">
+            <div class="card-body">
+                <div class="feature-icon">▤</div>
+                <h3>My Bookings</h3>
+                <p>View your room booking details and status.</p>
+                <a href="{{ url_for('customer.my_bookings') }}" class="btn btn-primary">
+                    My Bookings
+                </a>
+            </div>
+        </article>
+
+        <article class="card dashboard-action-card">
+            <div class="card-body">
+                <div class="feature-icon">☕</div>
+                <h3>My Food Orders</h3>
+                <p>Check your restaurant orders and payment status.</p>
+                <a href="{{ url_for('customer.my_food_orders') }}" class="btn btn-primary">
+                    My Orders
+                </a>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+{% endblock %}
