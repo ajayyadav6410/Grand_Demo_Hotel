@@ -1,0 +1,95 @@
+
+{% extends "base.html" %}
+
+{% block title %}Luxury Rooms | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">FIND YOUR PERFECT STAY</p>
+    <h1>Discover Our Rooms</h1>
+    <p>Choose from our comfortable rooms and enjoy a relaxing experience at Grand Demo Hotel.</p>
+</section>
+
+<section class="rooms-section">
+
+    {% if rooms %}
+        <div class="rooms-grid">
+
+            {% for room in rooms %}
+                <article class="room-luxury-card">
+
+                    <div class="room-image-wrapper">
+                        {% if 'Single' in room[1] %}
+                            <img src="{{ url_for('static', filename='images/single-room.jpg') }}"
+                                 alt="Single Room" class="room-image">
+                        {% elif 'Double' in room[1] %}
+                            <img src="{{ url_for('static', filename='images/double-room.jpg') }}"
+                                 alt="Double Room" class="room-image">
+                        {% elif 'Deluxe' in room[1] %}
+                            <img src="{{ url_for('static', filename='images/room-deluxe.jpg') }}"
+                                 alt="Deluxe Room" class="room-image">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/hotel.jpg') }}"
+                                 alt="Grand Demo Hotel Room" class="room-image">
+                        {% endif %}
+                    </div>
+
+                    <div class="room-card-top">
+                        <span class="room-category">GRAND DEMO HOTEL</span>
+                        <span class="room-number">ROOM {{ loop.index }}</span>
+                    </div>
+
+                    <div class="room-card-content">
+                        <div class="room-symbol">♛</div>
+
+                        <h2>{{ room[1] }}</h2>
+
+                        <p class="room-description">
+                            {{ room[2] or 'Enjoy a comfortable and relaxing stay in our hotel.' }}
+                        </p>
+
+                        <div class="room-price">
+                            <strong>₹{{ room[3] }}</strong>
+                            <span>/ night</span>
+                        </div>
+
+                        <div class="room-details">
+                            <p>
+                                <span>♙</span>
+                                Capacity: {{ room[4] }} Guests
+                            </p>
+
+                            <p>
+                                <span>✦</span>
+                                {{ room[5] or 'Comfortable hotel facilities' }}
+                            </p>
+                        </div>
+
+                        <a href="{{ url_for('booking.book_room', room_id=room[0]) }}"
+                           class="btn btn-primary room-book-button">
+                            Book This Room →
+                        </a>
+                    </div>
+
+                </article>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <div class="feature-icon">◇</div>
+            <h2>No Rooms Available</h2>
+            <p>Please check again later for available rooms.</p>
+        </div>
+    {% endif %}
+
+</section>
+
+<div class="facilities-back">
+    <a href="{{ url_for('customer.dashboard') }}" class="btn btn-outline">
+        Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}
