@@ -1,0 +1,75 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+<section class="admin-dashboard-page">
+    <div class="admin-dashboard-heading">
+        <p class="gold-text">MANAGEMENT PORTAL</p>
+        <h1>Admin Dashboard</h1>
+        <p>Welcome to Grand Demo Hotel management panel.</p>
+    </div>
+
+    <div class="admin-stats-grid">
+        <div class="admin-stat-card">
+            <span class="admin-stat-icon">♙</span>
+            <p>Total Users</p>
+            <h2>{{ total_users }}</h2>
+        </div>
+
+        <div class="admin-stat-card">
+            <span class="admin-stat-icon">▣</span>
+            <p>Total Bookings</p>
+            <h2>{{ total_bookings }}</h2>
+        </div>
+
+        <div class="admin-stat-card">
+            <span class="admin-stat-icon">♨</span>
+            <p>Restaurant Orders</p>
+            <h2>{{ total_food_orders }}</h2>
+        </div>
+
+        <div class="admin-stat-card">
+            <span class="admin-stat-icon">⌂</span>
+            <p>Total Rooms</p>
+            <h2>{{ total_rooms }}</h2>
+        </div>
+    </div>
+
+    <div class="admin-management-section">
+        <p class="gold-text">QUICK MANAGEMENT</p>
+        <h2>Manage Your Hotel</h2>
+
+        <div class="admin-management-grid">
+            <a href="/admin-bookings" class="admin-management-card">
+                <span>▣</span>
+                <h3>Manage Bookings</h3>
+                <p>View bookings and update their status.</p>
+                <strong>Open Section →</strong>
+            </a>
+
+            <a href="/admin-food-orders" class="admin-management-card">
+                <span>♨</span>
+                <h3>Restaurant Orders</h3>
+                <p>Manage food orders and order status.</p>
+                <strong>Open Section →</strong>
+            </a>
+
+            <a href="/admin-rooms" class="admin-management-card">
+                <span>⌂</span>
+                <h3>Manage Rooms</h3>
+                <p>Add, edit or remove hotel rooms.</p>
+                <strong>Open Section →</strong>
+            </a>
+
+            <a href="/admin-users" class="admin-management-card">
+                <span>♙</span>
+                <h3>View Users</h3>
+                <p>View registered customer information.</p>
+                <strong>Open Section →</strong>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Grand Demo Hotel{% endblock %}</title>
+
+    <meta name="description" content="Experience European luxury and comfort at Grand Demo Hotel.">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="navbar">
+
+            <a href="/" class="brand">
+                <span class="brand-icon">✦</span>
+                <span>
+                    <strong>GRAND DEMO</strong>
+                    <small>HOTEL & RESORT</small>
+                </span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/rooms">Rooms</a>
+                <a href="/facilities">Facilities</a>
+                <a href="/menu">Restaurant</a>
+
+                {% if session.get('user_id') %}
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/my-bookings">My Bookings</a>
+                    <a href="/my-food-orders">My Food Orders</a>
+                    <a href="/logout" class="nav-highlight">Logout</a>
+
+                {% elif session.get('admin_id') %}
+                    <a href="/admin-dashboard">Admin Panel</a>
+                    <a href="/admin-logout" class="nav-highlight">Logout</a>
+
+                {% else %}
+                    <a href="/login">Login</a>
+                    <a href="/register" class="nav-highlight">Register</a>
+                {% endif %}
+            </nav>
+
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        {% if message %}
+            <div class="message-box">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, flash_message in messages %}
+                    <div class="message-box {{ category }}">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-brand">GRAND DEMO HOTEL</div>
+        <p>Experience Luxury. Enjoy Comfort. Create Memories.</p>
+        <small>© {{ 2026 }} Grand Demo Hotel. All rights reserved.</small>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

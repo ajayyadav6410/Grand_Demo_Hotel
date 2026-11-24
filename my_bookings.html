@@ -1,0 +1,91 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Bookings | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">YOUR STAY, YOUR EXPERIENCE</p>
+    <h1>My Bookings</h1>
+    <p>View and track all your room reservations at Grand Demo Hotel.</p>
+</section>
+
+<section class="my-bookings-section">
+
+    {% if bookings %}
+        <div class="booking-list">
+
+            {% for booking in bookings %}
+                <article class="booking-luxury-card">
+
+                    <div class="booking-card-heading">
+                        <div>
+                            <p class="booking-reference">BOOKING #{{ booking[0] }}</p>
+                            <h2>{{ booking[1] }} Room</h2>
+                        </div>
+                        <span class="booking-status">
+                            {{ booking[7] }}
+                        </span>
+                    </div>
+
+                    <div class="booking-info-grid">
+
+                        <div class="booking-info-item">
+                            <span>CHECK-IN</span>
+                            <strong>{{ booking[2] }}</strong>
+                        </div>
+
+                        <div class="booking-info-item">
+                            <span>CHECK-OUT</span>
+                            <strong>{{ booking[3] }}</strong>
+                        </div>
+
+                        <div class="booking-info-item">
+                            <span>GUESTS</span>
+                            <strong>{{ booking[4] }}</strong>
+                        </div>
+
+                        <div class="booking-info-item">
+                            <span>TOTAL AMOUNT</span>
+                            <strong>₹{{ booking[5] }}</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="booking-card-footer">
+                        <span>
+                            Payment:
+                            <strong>{{ booking[6] }}</strong>
+                        </span>
+                        <span>
+                            Booking:
+                            <strong>{{ booking[7] }}</strong>
+                        </span>
+                    </div>
+
+                </article>
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+        <div class="empty-state">
+            <div class="feature-icon">◇</div>
+            <h2>No Bookings Yet</h2>
+            <p>You have not booked any rooms yet. Explore our rooms and plan your stay.</p>
+            <a href="{{ url_for('booking.rooms') }}" class="btn btn-primary">
+                Explore Rooms
+            </a>
+        </div>
+    {% endif %}
+
+</section>
+
+<div class="facilities-back">
+    <a href="{{ url_for('customer.dashboard') }}" class="btn btn-outline">
+        Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}

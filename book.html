@@ -1,0 +1,92 @@
+
+{% extends "base.html" %}
+
+{% block title %}Book Your Room | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">RESERVE YOUR COMFORT</p>
+    <h1>Book Your Room</h1>
+    <p>Choose your dates and guest details to plan your stay.</p>
+</section>
+
+<section class="booking-form-section">
+    <div class="booking-form-card">
+
+        <div class="booking-form-heading">
+            <span class="gold-text">YOUR SELECTED ROOM</span>
+
+            <h2>{{ room[1] }} Room</h2>
+
+            <div class="booking-room-price">
+                <strong>₹{{ room[2] }}</strong>
+                <span>/ night</span>
+            </div>
+
+            <p>Maximum capacity: {{ room[3] }} guests</p>
+        </div>
+
+        <form method="POST" class="luxury-booking-form">
+
+            <div class="booking-input-grid">
+
+                <div class="form-group">
+                    <label for="check_in">Check-in Date</label>
+                    <input
+                        type="date"
+                        id="check_in"
+                        name="check_in"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="check_out">Check-out Date</label>
+                    <input
+                        type="date"
+                        id="check_out"
+                        name="check_out"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="guests">Number of Guests</label>
+
+                <select id="guests" name="guests" required>
+                    {% for number in range(1, room[3] + 1) %}
+                        <option value="{{ number }}">
+                            {{ number }} Guest{% if number > 1 %}s{% endif %}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <small>Maximum capacity: {{ room[3] }} guests</small>
+            </div>
+
+            {% if message %}
+                <div class="message-box">{{ message }}</div>
+            {% endif %}
+
+            <button
+                type="submit"
+                class="btn btn-primary booking-submit-button"
+            >
+                Continue to Payment →
+            </button>
+
+            <a
+                href="{{ url_for('booking.rooms') }}"
+                class="booking-cancel-link"
+            >
+                Back to Rooms
+            </a>
+
+        </form>
+    </div>
+</section>
+
+{% endblock %}

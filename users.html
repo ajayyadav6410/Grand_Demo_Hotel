@@ -1,0 +1,66 @@
+
+{% extends "base.html" %}
+
+{% block title %}Manage Users | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+<section class="admin-users-page">
+
+    <div class="admin-users-heading">
+        <p class="gold-text">CUSTOMER MANAGEMENT</p>
+        <h1>Registered Customers</h1>
+        <p>View customer accounts and registration details.</p>
+        <a href="/admin-dashboard" class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <div class="admin-users-summary">
+        <div class="admin-users-stat-card">
+            <span>♙</span>
+            <p>Total Registered Users</p>
+            <h2>{{ users|length }}</h2>
+        </div>
+    </div>
+
+    <div class="admin-users-table-card">
+        <div class="admin-users-table-heading">
+            <p class="gold-text">CUSTOMER RECORDS</p>
+            <h2>All Registered Users</h2>
+        </div>
+
+        {% if users %}
+        <div class="admin-users-table-wrapper">
+            <table class="admin-users-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Customer Name</th>
+                        <th>Email Address</th>
+                        <th>Registration Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>#{{ user[0] }}</td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                        <td>{{ user[3] or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="admin-users-empty">
+            <span>♙</span>
+            <h3>No Registered Users Found</h3>
+            <p>Customer registration records will appear here.</p>
+        </div>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}

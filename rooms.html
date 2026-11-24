@@ -1,0 +1,170 @@
+
+{% extends "base.html" %}
+
+{% block title %}Manage Rooms | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+<section class="admin-rooms-page">
+
+    <div class="admin-rooms-heading">
+        <p class="gold-text">HOTEL MANAGEMENT</p>
+        <h1>Manage Hotel Rooms</h1>
+        <p>Add new rooms, update room details and manage availability.</p>
+        <a href="/admin-dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+    </div>
+
+    <!-- Add New Room -->
+    <div class="admin-room-add-card">
+        <div class="admin-room-section-heading">
+            <p class="gold-text">NEW ACCOMMODATION</p>
+            <h2>Add New Room</h2>
+        </div>
+
+        <form method="POST" class="admin-room-form">
+            <input type="hidden" name="action" value="add">
+
+            <div class="admin-room-form-grid">
+                <div class="form-group">
+                    <label>Room Type</label>
+                    <input type="text" name="room_type"
+                           placeholder="Example: Luxury Suite" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Price Per Night (₹)</label>
+                    <input type="number" name="price"
+                           min="1" step="0.01" placeholder="5000" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Capacity (Guests)</label>
+                    <input type="number" name="capacity"
+                           min="1" placeholder="2" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Facilities</label>
+                    <input type="text" name="facilities"
+                           placeholder="AC, Wi-Fi, TV">
+                </div>
+
+                <div class="form-group admin-room-full-width">
+                    <label>Description</label>
+                    <textarea name="description" rows="3"
+                              placeholder="Enter room description"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                + Add Room
+            </button>
+        </form>
+    </div>
+
+    <!-- Existing Rooms -->
+    <div class="admin-room-list-heading">
+        <p class="gold-text">ROOM INVENTORY</p>
+        <h2>All Hotel Rooms</h2>
+    </div>
+
+    {% if rooms %}
+    <div class="admin-room-list">
+
+        {% for room in rooms %}
+        <article class="admin-room-card">
+
+            <div class="admin-room-card-heading">
+                <div>
+                    <p class="gold-text">ROOM #{{ room[0] }}</p>
+                    <h3>{{ room[1] }}</h3>
+                </div>
+
+                <span class="admin-room-availability
+                    {% if room[6] == 1 %}available{% else %}unavailable{% endif %}">
+                    {% if room[6] == 1 %}Available{% else %}Unavailable{% endif %}
+                </span>
+            </div>
+
+            <form method="POST" class="admin-room-form">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="room_id" value="{{ room[0] }}">
+
+                <div class="admin-room-form-grid">
+
+                    <div class="form-group">
+                        <label>Room Type</label>
+                        <input type="text" name="room_type"
+                               value="{{ room[1] }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price Per Night (₹)</label>
+                        <input type="number" name="price"
+                               value="{{ room[3] }}"
+                               min="1" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Capacity</label>
+                        <input type="number" name="capacity"
+                               value="{{ room[4] }}" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Facilities</label>
+                        <input type="text" name="facilities"
+                               value="{{ room[5] or '' }}">
+                    </div>
+
+                    <div class="form-group admin-room-full-width">
+                        <label>Description</label>
+                        <textarea name="description" rows="3">{{ room[2] or '' }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Room Availability</label>
+                        <select name="available">
+                            <option value="1"
+                                {% if room[6] == 1 %}selected{% endif %}>
+                                Available
+                            </option>
+                            <option value="0"
+                                {% if room[6] == 0 %}selected{% endif %}>
+                                Unavailable
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Save Changes
+                </button>
+            </form>
+
+            <div class="admin-room-delete-area">
+                <form method="POST">
+                    input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="room_id" value="{{ room[0] }}">
+
+                    <button type="submit" class="admin-room-delete-btn">
+                        Delete Room
+                    </button>
+                </form>
+                <p>Rooms with existing booking records cannot be deleted.</p>
+            </div>
+
+        </article>
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <div class="admin-room-empty">
+        <span>⌂</span>
+        <h3>No Rooms Found</h3>
+        <p>Add your first hotel room using the form above.</p>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

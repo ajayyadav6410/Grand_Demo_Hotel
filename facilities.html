@@ -1,0 +1,64 @@
+
+{% extends "base.html" %}
+
+{% block title %}Hotel Facilities | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">EXPERIENCE MORE COMFORT</p>
+    <h1>Our Hotel Facilities</h1>
+    <p>Discover the services and amenities designed to make your stay comfortable and memorable.</p>
+</section>
+
+<section class="facilities-section">
+    {% if facilities %}
+        <div class="card-grid">
+            {% for facility in facilities %}
+                <article class="card facility-card">
+
+                    <div class="facility-image-wrapper">
+                        {% if 'Swimming Pool' in facility[1] %}
+                            <img src="{{ url_for('static', filename='images/pool.jpg') }}"
+                                 alt="Hotel Swimming Pool"
+                                 class="facility-image">
+                        {% elif 'Spa' in facility[1] %}
+                            <img src="{{ url_for('static', filename='images/spa.jpg') }}"
+                                 alt="Hotel Spa"
+                                 class="facility-image">
+                        {% elif 'Restaurant' in facility[1] %}
+                            <img src="{{ url_for('static', filename='images/restaurant.jpg') }}"
+                                 alt="Hotel Restaurant"
+                                 class="facility-image">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/hotel.jpg') }}"
+                                 alt="Grand Demo Hotel"
+                                 class="facility-image">
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body">
+                        <div class="feature-icon">✦</div>
+                        <p class="facility-number">FACILITY {{ loop.index }}</p>
+                        <h3>{{ facility[1] }}</h3>
+                        <p>{{ facility[2] or 'Enjoy this facility during your stay at Grand Demo Hotel.' }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <div class="feature-icon">◇</div>
+            <h2>Facilities Coming Soon</h2>
+            <p>Our hotel facilities will be displayed here.</p>
+        </div>
+    {% endif %}
+</section>
+
+<div class="facilities-back">
+    <a href="{{ url_for('customer.dashboard') }}" class="btn btn-primary">
+        Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}

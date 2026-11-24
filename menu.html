@@ -1,0 +1,131 @@
+
+{% extends "base.html" %}
+
+{% block title %}Restaurant Menu | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">A TASTE OF LUXURY</p>
+    <h1>Our Restaurant Menu</h1>
+    <p>Discover delicious food and refreshing beverages at Grand Demo Hotel.</p>
+</section>
+
+<section class="restaurant-section">
+
+    <div class="restaurant-banner">
+        <img
+            src="{{ url_for('static', filename='images/restaurant.jpg') }}"
+            alt="Grand Demo Hotel Restaurant"
+            class="restaurant-banner-image"
+        >
+        <div class="restaurant-banner-overlay">
+            <p class="gold-text">FRESHLY PREPARED FOR YOU</p>
+            <h2>Explore Our Special Menu</h2>
+            <p>Select your favorite dishes, choose the quantity and place your order.</p>
+        </div>
+    </div>
+
+    {% if message %}
+        <div class="message-box">{{ message }}</div>
+    {% endif %}
+
+    {% if menu_items %}
+
+        <form method="POST" class="restaurant-order-form">
+
+            <div class="restaurant-menu-grid">
+
+                {% for item in menu_items %}
+
+                    <article class="restaurant-food-card">
+
+                        <div class="food-image-wrapper">
+
+                            {% if item.image %}
+                                <img
+                                    src="{{ item.image }}"
+                                    alt="{{ item.name }}"
+                                    class="food-image"
+                                    loading="lazy"
+                                >
+                            {% else %}
+                                <div class="food-image-placeholder">
+                                    <span>✦</span>
+                                    <p>GRAND DEMO HOTEL</p>
+                                </div>
+                            {% endif %}
+
+                            <span class="food-category">
+                                {{ item.category or 'SPECIAL MENU' }}
+                            </span>
+
+                        </div>
+
+                        <div class="food-card-content">
+
+                            <h3>{{ item.name }}</h3>
+
+                            <div class="food-price">
+                                ₹{{ item.price }}
+                            </div>
+
+                            <div class="food-quantity">
+                                <label for="quantity_{{ item.id }}">
+                                    Select Quantity
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="quantity_{{ item.id }}"
+                                    name="quantity_{{ item.id }}"
+                                    value="0"
+                                    min="0"
+                                    max="20"
+                                    step="1"
+                                >
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="restaurant-order-footer">
+
+                <div>
+                    <p class="gold-text">YOUR DINING EXPERIENCE</p>
+                    <h2>Ready to Place Your Order?</h2>
+                    <p>Select at least one food item to continue.</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary restaurant-order-button">
+                    Place Food Order →
+                </button>
+
+            </div>
+
+        </form>
+
+    {% else %}
+
+        <div class="empty-state">
+            <div class="feature-icon">◇</div>
+            <h2>Menu Coming Soon</h2>
+            <p>Our restaurant menu is currently unavailable. Please check again later.</p>
+        </div>
+
+    {% endif %}
+
+</section>
+
+<div class="facilities-back">
+    <a href="{{ url_for('customer.dashboard') }}" class="btn btn-outline">
+        Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+
+{% extends "base.html" %}
+
+{% block title %}Booking Payment | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">COMPLETE YOUR RESERVATION</p>
+    <h1>Booking Payment</h1>
+    <p>Review your booking amount and confirm your demo payment.</p>
+</section>
+
+<section class="payment-section">
+    <div class="payment-card">
+
+        <div class="payment-card-heading">
+            <span class="gold-text">GRAND DEMO HOTEL</span>
+            <h2>Booking Summary</h2>
+            <p>Booking Reference #{{ booking[0] }}</p>
+        </div>
+
+        <div class="payment-amount">
+            <span>TOTAL BOOKING AMOUNT</span>
+            <strong>₹{{ booking[1] }}</strong>
+        </div>
+
+        <div class="payment-detail-row">
+            <span>Payment Status</span>
+            <strong>{{ booking[2] }}</strong>
+        </div>
+
+        <div class="payment-detail-row">
+            <span>Booking Status</span>
+            <strong>{{ booking[3] }}</strong>
+        </div>
+
+        {% if booking[2] == 'Paid' %}
+            <div class="payment-success-message">
+                Your demo payment has already been completed.
+            </div>
+
+            <a href="{{ url_for('customer.my_bookings') }}"
+               class="btn btn-primary payment-button">
+                View My Bookings
+            </a>
+        {% else %}
+            <div class="demo-payment-note">
+                <strong>Demo Payment Only</strong>
+                <p>This is a demonstration payment. No real money will be charged.</p>
+            </div>
+
+            <form method="POST">
+                <button type="submit"
+                        class="btn btn-primary payment-button">
+                    Confirm Demo Payment
+                </button>
+            </form>
+
+            <a href="{{ url_for('customer.my_bookings') }}"
+               class="payment-cancel-link">
+                Pay Later — View My Bookings
+            </a>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

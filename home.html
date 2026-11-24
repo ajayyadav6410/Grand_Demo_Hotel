@@ -1,0 +1,114 @@
+
+{% extends "base.html" %}
+
+{% block title %}Grand Demo Hotel | Luxury & Comfort{% endblock %}
+
+{% block content %}
+
+<section class="hero fade-in">
+    <div>
+        <p class="gold-text">WELCOME TO GRAND DEMO HOTEL</p>
+
+        <h1>Experience Luxury.<br>
+            Enjoy Comfort.</h1>
+
+        <p>
+            Your Comfort, Our Priority.
+            Enjoy a comfortable and relaxing stay with us.
+            Explore our rooms and hotel facilities.
+            We are happy to serve you.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/rooms" class="btn">Explore Our Rooms</a>
+
+            {% if session.get('user_id') %}
+                <a href="/dashboard" class="btn btn-outline">
+                    My Dashboard
+                </a>
+            {% else %}
+                <a href="/register" class="btn btn-outline">
+                    Create Account
+                </a>
+
+                <a href="/login" class="btn btn-outline">
+                    User Login
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="welcome-section">
+    <div class="section-title">
+        <p class="gold-text">A WORLD OF COMFORT</p>
+        <h2>Welcome to Grand Demo Hotel!</h2>
+
+        <p>
+            Discover a relaxing experience with elegant rooms,
+            delicious food and comfortable hotel facilities.
+        </p>
+    </div>
+
+    <div class="card-grid">
+
+        <article class="card">
+            <div class="card-body">
+                <div class="feature-icon">♛</div>
+                <h3>Luxury Rooms</h3>
+                <p>
+                    Explore our Single, Double and Deluxe rooms
+                    designed for a comfortable stay.
+                </p>
+                <a href="/rooms" class="btn btn-primary">
+                    View Rooms
+                </a>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-body">
+                <div class="feature-icon">✦</div>
+                <h3>Hotel Facilities</h3>
+                <p>
+                    Explore the facilities available at
+                    Grand Demo Hotel for our guests.
+                </p>
+                <a href="/facilities" class="btn btn-primary">
+                    Explore Facilities
+                </a>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-body">
+                <div class="feature-icon">♨</div>
+                <h3>Restaurant</h3>
+                <p>
+                    Discover our restaurant menu, select your
+                    favorite food and place an order.
+                </p>
+                <a href="/menu" class="btn btn-primary">
+                    View Restaurant
+                </a>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<section class="booking-banner">
+    <div>
+        <p class="gold-text">YOUR STAY, YOUR EXPERIENCE</p>
+        <h2>Make Your Stay Memorable</h2>
+        <p>
+            Find your comfortable room and enjoy your stay
+            at Grand Demo Hotel.
+        </p>
+        <a href="/rooms" class="btn">
+            Book Your Stay
+        </a>
+    </div>
+</section>
+
+{% endblock %}

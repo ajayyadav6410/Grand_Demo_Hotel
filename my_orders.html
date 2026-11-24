@@ -1,0 +1,98 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Food Orders | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">YOUR DINING HISTORY</p>
+    <h1>My Food Orders</h1>
+    <p>Track your restaurant orders and payment details at Grand Demo Hotel.</p>
+</section>
+
+<section class="my-food-orders-section">
+
+    {% if orders %}
+
+        <div class="food-orders-list">
+
+            {% for order in orders %}
+
+                <article class="food-order-card">
+
+                    <div class="food-order-card-header">
+                        <div>
+                            <p class="food-order-reference">
+                                ORDER #{{ order[0] }}
+                            </p>
+                            <h2>Restaurant Order</h2>
+                        </div>
+
+                        <span class="food-order-badge">
+                            {{ order[4] }}
+                        </span>
+                    </div>
+
+                    <div class="food-order-info-grid">
+
+                        <div class="food-order-info">
+                            <span>ORDER AMOUNT</span>
+                            <strong>₹{{ order[1] }}</strong>
+                        </div>
+
+                        <div class="food-order-info">
+                            <span>PAYMENT METHOD</span>
+                            <strong>{{ order[2] }}</strong>
+                        </div>
+
+                        <div class="food-order-info">
+                            <span>PAYMENT STATUS</span>
+                            <strong>{{ order[3] }}</strong>
+                        </div>
+
+                        <div class="food-order-info">
+                            <span>ORDER DATE</span>
+                            <strong>{{ order[5] or 'Not Available' }}</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="food-order-card-footer">
+                        <a
+                            href="{{ url_for('restaurant.food_bill', batch_id=order[0]) }}"
+                            class="btn btn-primary"
+                        >
+                            View Food Bill →
+                        </a>
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <div class="feature-icon">◇</div>
+            <h2>No Food Orders Yet</h2>
+            <p>You have not placed any restaurant orders yet.</p>
+
+            <a href="{{ url_for('restaurant.menu') }}" class="btn btn-primary">
+                Explore Restaurant Menu
+            </a>
+        </div>
+
+    {% endif %}
+
+</section>
+
+<div class="facilities-back">
+    <a href="{{ url_for('customer.dashboard') }}" class="btn btn-outline">
+        Back to Dashboard
+    </a>
+</div>
+
+{% endblock %}

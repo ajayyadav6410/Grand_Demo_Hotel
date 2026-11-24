@@ -1,0 +1,135 @@
+
+{% extends "base.html" %}
+
+{% block title %}Food Bill | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+
+<section class="page-hero fade-in">
+    <p class="gold-text">YOUR DINING EXPERIENCE</p>
+    <h1>Your Food Bill</h1>
+    <p>Review your selected food items and choose your payment method.</p>
+</section>
+
+<section class="food-bill-section">
+
+    <div class="food-bill-card">
+
+        <div class="food-bill-heading">
+            <span class="gold-text">GRAND DEMO HOTEL RESTAURANT</span>
+            <h2>Food Order Summary</h2>
+            <p>Bill Number: #{{ order[0] }}</p>
+        </div>
+
+        <div class="food-bill-table-wrapper">
+            <table class="food-bill-table">
+                <thead>
+                    <tr>
+                        <th>Food Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item[2] }}</td>
+                        <td>{{ item[3] }}</td>
+                        <td>₹{{ item[4] }}</td>
+                        <td>₹{{ item[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="food-bill-total">
+            <span>Grand Total</span>
+            <strong>₹{{ order[2] }}</strong>
+        </div>
+
+        {% if order[3] == 'Not Selected' %}
+
+            <div class="food-payment-heading">
+                <h3>Select Payment Method</h3>
+                <p>Choose how you would like to pay for your food order.</p>
+            </div>
+
+            <form
+                method="POST"
+                action="{{ url_for('restaurant.food_payment', batch_id=order[0]) }}"
+                class="food-payment-form"
+            >
+
+                <label class="food-payment-option">
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="Demo Online Payment"
+                        required
+                    >
+                    <span>
+                        <strong>Demo Online Payment</strong>
+                        <small>Demo payment only. No real money will be charged.</small>
+                    </span>
+                </label>
+
+                <label class="food-payment-option">
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="Cash at Restaurant"
+                        required
+                    >
+                    <span>
+                        <strong>Cash at Restaurant</strong>
+                        <small>Pay your food bill at the hotel restaurant.</small>
+                    </span>
+                </label>
+
+                <button type="submit" class="btn btn-primary food-payment-button">
+                    Confirm Payment Method →
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <div class="food-order-status">
+                <div>
+                    <span>Payment Method</span>
+                    <strong>{{ order[3] }}</strong>
+                </div>
+
+                <div>
+                    <span>Payment Status</span>
+                    <strong>{{ order[4] }}</strong>
+                </div>
+
+                <div>
+                    <span>Order Status</span>
+                    <strong>{{ order[5] }}</strong>
+                </div>
+            </div>
+
+        {% endif %}
+
+        <div class="food-bill-actions">
+            <a href="{{ url_for('customer.my_food_orders') }}"
+               class="btn btn-outline">
+                My Food Orders
+            </a>
+
+            <a href="{{ url_for('customer.dashboard') }}"
+               class="food-bill-back-link">
+                Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

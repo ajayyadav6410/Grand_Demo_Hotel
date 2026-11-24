@@ -1,0 +1,123 @@
+
+{% extends "base.html" %}
+
+{% block title %}Restaurant Orders | Grand Demo Hotel{% endblock %}
+
+{% block content %}
+<section class="admin-food-orders-page">
+
+    <div class="admin-food-orders-heading">
+        <p class="gold-text">RESTAURANT MANAGEMENT</p>
+        <h1>Restaurant Orders</h1>
+        <p>View customer food orders and manage their preparation status.</p>
+        <a href="/admin-dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+    </div>
+
+    <div class="admin-food-orders-summary">
+        <div class="food-order-summary-card">
+            <span>♨</span>
+            <p>Total Orders</p>
+            <h2>{{ order_data|length }}</h2>
+        </div>
+    </div>
+
+    <div class="admin-food-orders-list">
+        {% if order_data %}
+            {% for order, items in order_data %}
+            <article class="admin-food-order-card">
+
+                <div class="food-order-card-heading">
+                    <div>
+                        <p class="gold-text">ORDER #{{ order[0] }}</p>
+                        <h2>{{ order[1] }}</h2>
+                        <p>{{ order[2] }}</p>
+                    </div>
+                    <div class="food-order-total">
+                        <small>Order Total</small>
+                        <strong>₹{{ "%.2f"|format(order[3]) }}</strong>
+                    </div>
+                </div>
+
+                <div class="food-order-details-grid">
+                    <div>
+                        <small>Payment Method</small>
+                        <strong>{{ order[4] }}</strong>
+                    </div>
+                    <div>
+                        <small>Payment Status</small>
+                        <strong>{{ order[5] }}</strong>
+                    </div>
+                    <div>
+                        <small>Order Status</small>
+                        <strong class="food-order-status">{{ order[6] }}</strong>
+                    </div>
+                    <div>
+                        <small>Order Date</small>
+                        <strong>{{ order[7] }}</strong>
+                    </div>
+                </div>
+
+                <div class="food-order-items-section">
+                    <h3>Ordered Food Items</h3>
+
+                    {% if items %}
+                    <div class="food-order-items-table-wrapper">
+                        <table class="food-order-items-table">
+                            <thead>
+                                <tr>
+                                    <th>Food Item</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Item Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td>{{ item[0] }}</td>
+                                    <td>{{ item[1] }}</td>
+                                    <td>₹{{ "%.2f"|format(item[2]) }}</td>
+                                    <td>₹{{ "%.2f"|format(item[3]) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p>No food items found for this order.</p>
+                    {% endif %}
+                </div>
+
+                <form method="POST" class="food-order-update-form">
+                    <input type="hidden" name="order_id" value="{{ order[0] }}">
+
+                    <label for="order-status-{{ order[0] }}">Update Order Status</label>
+
+                    <select id="order-status-{{ order[0] }}"
+                            name="order_status">
+                        {% for status in ['Pending', 'Confirmed', 'Preparing', 'Ready', 'Completed', 'Cancelled'] %}
+                        <option value="{{ status }}"
+                            {% if order[6] == status %}selected{% endif %}>
+                            {{ status }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit" class="btn btn-primary">
+                        Update Status
+                    </button>
+                </form>
+
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="admin-food-orders-empty">
+                <span>♨</span>
+                <h2>No Restaurant Orders Found</h2>
+                <p>Customer food orders will appear here.</p>
+            </div>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}
